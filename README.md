@@ -1,31 +1,41 @@
-# Perform a RDA
+# Perform a Redundancy Analysis using genomics as X and envrionment as Y (explanatory variables)
 
-### Remove last features
+### Clean up workspace
 ```{r}
 rm(list=ls())
 ```
 
-### Download libraries
+## Download libraries
 ```{r}
+library(codep)
+library(adespatial)
+library(adegraphics)
 library(vegan)
-library(reshape2)
-library(FactoMineR)
+library(ape)
+library(car)
+library(adegenet)
+library(dplyr)
 ```
 
-### Download data
+## Download data
 
-* **Genomic data**. 
+We used a genepop file and import the genepop using read.genepop function.
+
 ```{r}
-data <- read.table("9770snps-neutral.frq.strat", header=T, sep="\t", dec=".")
-data2 <- data[,2:3]
-data3 <- cbind(data2, data$MAF)
-colnames(data3)=c("SNP","POP","MAF")
+genpop_sebastes <- read.genepop("24603snps_860ind_sebastes.gen",ncode = 3L) # for both species
 ```
-* **Convert genomic data from long to wide**
+
+### Calculate euclidian distances
+To perform the RDA at the individual level.https://popgen.nescent.org/2015-05-18-Dist-SNP.html
+
 ```{r}
-data4 <- dcast(data3, POP~SNP)
-write.table(data4, "9770snps-all.txt", quote=F, sep="\t")
+distgenEUCL <- dist(genpop_sebastes, method = "euclidean", diag = FALSE, upper = FALSE, p = 2)
+write.table(as.matrix(distgenEUCL),"distgenEUCL-sebastes_860ind.txt", row.names=TRUE, quote=FALSE, sep="\t")
 ```
+
+#Import Genetic distance matrix
+distgenEUCL <- read.table('distgenEUCL-sebastes_860ind.txt')
+
 
 * **Call your genotype object**
 ```{r}
