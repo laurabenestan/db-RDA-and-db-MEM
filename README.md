@@ -15,43 +15,41 @@ Submited to Evolutionary Applications, 2020
 
 _______________________________________________________________________________
 
-
-# Distance-based redundancy analysis highlights the influence of depth 
-
 Using multivariate analyses is not an easy task and finding the proper way to perform such analysis can be sometime trivial.
 Here, we indicated how we used a db-RDA analysis following a step by step tutorial.
+You will see during thsi tutorial how the tool of distance-based redundancy analysis can nicely demonstrate the influence of depth on teh genomic variation of Sebastes spp.
 
-In the R environment, first remove all last features
+### Softwares
 
-rm(list=ls())
+- [R Version 3.6.0](https://cran.r-project.org/)
+	* R packages: codep, adespatial, adegraphics, vegan, ape, car, adegenet, dplyr
 
-All the libraries that you will need:
-- library(codep)
-- library(adespatial)
-- library(adegraphics)
-- library(vegan)
-- library(ape)
-- library(car)
-- library(adegenet)
-- library(dplyr)
+### Data import
 
-#Genomic data that will be used
-#Import Genepop file
+Data need to be in genepop format. 
+You can easly find functions that can transform your dataset into a genpop format.
+For instance the `genomic_converter` function available in the elegant package [assigner](https://github.com/thierrygosselin/assigner)
+
+Import the Genepop file into the R environment:
+```{r}
 genpop_sebastes <- read.genepop("24603snps_860ind_sebastes.gen",ncode = 3L) # for both species
-genpop_sebastes <- read.genepop("24603snps_444ind_pop.gen_genepop.gen",ncode = 3L) # for fasciatus only
-genpop_sebastes <- read.genepop("24603snps_416ind_pop.gen_genepop.gen",ncode = 3L) # for fasciatus only
+```
 
-### Calculate euclidian distances
+### Calculate euclidian distances on a genepop object 
+
+First, estimating individual genetic distances is a crucial step before performing the db-RDA.
+The individual genetic distances will be considered as the **response variables**.
+```{r}
 distgenEUCL <- dist(genpop_sebastes, method = "euclidean", diag = FALSE, upper = FALSE, p = 2)
-write.table(as.matrix(distgenEUCL),"distgenEUCL-sebastes_416ind.txt", row.names=TRUE, quote=FALSE, sep="\t")
+```
 
-#Import Genetic distance matrix
-distgenEUCL <- read.table('distgenEUCL-sebastes_860ind.txt')
-
-#Import explanatory variables
+Second, import the envrionmental dataset, which will contained the **explanatory variables**
+```{r}
 Env <- read.table("Env_860ind.txt", header=TRUE)
+```
+[![https://fr.freepik.com/icones-gratuites/attention-signe_770843.htm](Attention)
 
-#Put in the right order
+Check that both datasets - response and explanatory variables - are in the same order.
 Order <- read.table("Order.txt", header=FALSE)
 Order$IND <- substr(Order$V1, 7,12)
 Order$SPECIES <- substr(Order$V1,1,3)
