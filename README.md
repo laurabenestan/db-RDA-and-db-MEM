@@ -6,7 +6,7 @@ _______________________________________________________________________________
 
 
 
-#### Laura Benestan, Caroline Senay, Geneviève Parent
+#### Caroline Senay, Laura Benestan, Geneviève Parent
 
 Rimouski, 2017-2020
 
