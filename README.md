@@ -108,7 +108,7 @@ MEM can be used in stats like any other env variables.
 s.value(Coor, dbmem[,1:16])
 ```
 
-To learn more about MEM, see the elegant vigentte of [Stéphane Dray](https://cran.r-project.org/web/packages/adespatial/vignettes/tutorial.html)
+To learn more about MEM, see the elegant vignette of [Stéphane Dray](https://cran.r-project.org/web/packages/adespatial/vignettes/tutorial.html)
 
 ## 3. Perform a Principal Coordinates Analysis (PCoA) on the Euclidian distances
 
