@@ -15,14 +15,14 @@ Submited to Evolutionary Applications, 2020
 
 _______________________________________________________________________________
 
-Using multivariate analyses is not an easy task and finding the proper way to perform such analysis can be sometime trivial.
-Here, we indicated how we used a db-RDA analysis following a step by step tutorial.
-You will see during thsi tutorial how the tool of distance-based redundancy analysis can nicely demonstrate the influence of depth on teh genomic variation of Sebastes spp.
+Using multivariate analyses is not an easy task and finding the proper way to perform such analysis is often not so trivial.
+Here, we indicated how we used a db-RDA analysis following a step by step tutorial. A genomic distance matrix is used as the response variable, and spatial variables (MEMs), depth, and sampling year are used as explanatory variable.
+You will see during this tutorial how the tool of distance-based redundancy analysis can nicely demonstrate the influence of depth on the genomic variation of Sebastes spp.
 
 ### Softwares
 
 - [R Version 3.6.0](https://cran.r-project.org/)
-	* R packages: codep, adespatial, adegraphics, vegan, ape, car, adegenet, dplyr
+	* R packages: codep, adespatial, adegraphics, vegan, ape, car, adegenet, dplyr, assigner
 
 ### Data import
 
@@ -37,7 +37,7 @@ genpop_sebastes <- read.genepop("24603snps_860ind_sebastes.gen",ncode = 3L) # fo
 
 ## 1. Prepare the response and explanatory variables 
 
-### Calculate euclidian distances on a genepop object 
+### Calculate Euclidian distances on a genepop object 
 
 First, estimating individual genetic distances is a crucial step before performing the db-RDA.
 The individual genetic distances will be considered as the **response variables**.
@@ -45,7 +45,7 @@ The individual genetic distances will be considered as the **response variables*
 distgenEUCL <- dist(genpop_sebastes, method = "euclidean", diag = FALSE, upper = FALSE, p = 2)
 ```
 
-Second, import the envrionmental dataset, which will contained the **explanatory variables**
+Second, import the environmental dataset, which will contained the **explanatory variables**
 ```{r}
 Env <- read.table("Env_860ind.txt", header=TRUE)
 ```
@@ -108,7 +108,7 @@ MEM can be used in stats like any other env variables.
 s.value(Coor, dbmem[,1:16])
 ```
 
-## 3. Perform a PCOA on the Euclidian distances
+## 3. Perform a Principal Coordinates Analysis (PCoA) on the Euclidian distances
 
 **Perform a Pcoa** on genetic distance matrix. 
 Genetic distances are then in the multivariate space format, appropriate for running the db-RDA.
@@ -119,7 +119,7 @@ Pcoa
 ```
 
 "There were no negative eigenvalues. No correction was applied"   
-If negative or null eigenvalues are produced, they need to be explused.
+If negative or null eigenvalues are produced, they need to be excluded.
 
 The first four axes explains 99.4% of the enture genomic variation. 
 We will keep them all to analyse all genetic variation
@@ -157,22 +157,24 @@ Greater than around 10 is problematic.
 ```{r}
 vif(rda1)
 ```
-
 We don't need to exclude variables because of correlation
-Explained variance by the global db-RDA model. 
-Adjusted R2 accounts for the number of variables 
-RsquareAdj(rda1) was equal to 37% explained variance
 
-Assess th db-RDA Global model probability
+Then we look at the explained variance by the global db-RDA model.
+Adjusted R2 accounts for the number of variables.
+```{r}
+RsquareAdj(rda1)
+```
+ Here, RsquareAdj(rda1) was equal to 37% explained variance.
+
+Assess the db-RDA global model probability
 ```{r}
 anova(rda1, perm=999)
 ```
-
-The P-value obtained was...
+The P-value obtained was P-value = 0.001.
 
 Then, use the function `OrdiR2Step`for selecting the relevant variables to use in the db-RDA. 
 This function allows to add and remove variables in order to maximise the explained variance. 
-To avoid overfitting, selected variables should not explained more than the global model (36%). 
+To avoid overfitting, selected variables should not explained more than the global model (37%). 
 
 `OrdiR2step` will start working from an empty model without explanatory variables, just the intercept.
 ```{r}
@@ -184,7 +186,7 @@ OrdiR2step will move towards the global model with all explanatory variables
 rdaG<- rda(X ~ ., Y)
 ```
 
-**Selection of variables** until the 36% (rda global model) is reached
+**Selection of variables** until the 37% (rda global model) is reached
 ```{r}
 Sel <- ordiR2step(rda0, scope = formula(rdaG), direction="both") 
 ```
@@ -218,7 +220,7 @@ rdaS<- rda(X ,Ysel)
 summary(rdaS, scaling=1)    
 ```
 
-Check the RDA summary
+Check the RDA summary. Scaling 1 allows the interpretation to focus on the ordination of objects because the distances among objects approximate their Euclidean distances in the space of response variables.
 ```{r}
 RsquareAdj(rdaS)
 ```
