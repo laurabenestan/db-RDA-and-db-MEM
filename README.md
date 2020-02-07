@@ -37,7 +37,7 @@ genpop_sebastes <- read.genepop("24603snps_860ind_sebastes.gen",ncode = 3L) # fo
 
 ## 1. Prepare the response and explanatory variables 
 
-### Calculate Euclidian distances on a genepop object 
+### Calculate Euclidean distances on a genepop object 
 
 First, estimating individual genetic distances is a crucial step before performing the db-RDA.
 The individual genetic distances will be considered as the **response variables**.
@@ -110,7 +110,7 @@ s.value(Coor, dbmem[,1:16])
 
 To learn more about MEM, see the elegant vignette of [Stéphane Dray](https://cran.r-project.org/web/packages/adespatial/vignettes/tutorial.html)
 
-## 3. Perform a Principal Coordinates Analysis (PCoA) on the Euclidian distances
+## 3. Perform a Principal Coordinates Analysis (PCoA) on the Euclidean distances
 
 **Perform a Pcoa** on genetic distance matrix. 
 Genetic distances are then in the multivariate space format, appropriate for running the db-RDA.
