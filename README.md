@@ -112,7 +112,7 @@ To learn more about MEM, see the elegant vignette of [Stéphane Dray](https://cr
 
 ## 3. Perform a Principal Coordinates Analysis (PCoA) on the Euclidean distances
 
-**Perform a Pcoa** on genetic distance matrix. 
+**Perform a PCoA** on genetic distance matrix. The advantage of the PCoA is that it does not take into account the missing observations (corresponding to 0 in the genomic data frame) in the response variable comparatively to the PCA.
 Genetic distances are then in the multivariate space format, appropriate for running the db-RDA.
 
 ```{r}
@@ -213,7 +213,7 @@ All MEMS
 s.value(Coor, dbmem[,1:16])
 ```
 
-## 5. Build a model with the selected variables and vidualize the results
+## 5. Build a model with the selected variables and visualize the results
 
 Now build a model with only selected variables
 ```{r}
