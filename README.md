@@ -138,9 +138,9 @@ plot(X[,1], X[,2])
 ```
 
 ## 4. Selection of explanatory variables
-Create a matrix with all expanatory variables, 16 MEMs, depth, and n-1 years coded in dummy variables (2001, 2002, 2008, 2013, 2014)  
+Create a matrix with all expanatory variables, 16 MEMs, depth, and n-1 years coded in dummy variables (2001, 2002, 2008, 2013, 2014,2015)  
 ```{r}
-Y=cbind(dbmem, Env[,7:12])
+Y=cbind(dbmem, Env[,7:13])
 ```
 
 Look at correlation among explanatory variables
