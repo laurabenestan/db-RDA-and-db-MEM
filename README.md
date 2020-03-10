@@ -274,4 +274,4 @@ text(scores(rdaS, display="bp", choices=1, scaling=1)*75, scores(rdaS, display="
 ```{r}
 save.image("RDA_all_860ind.Rdata")
 ```
-![RDA_860ind](RDA_860ind.png)
+![RDA_860ind](RDA_all.png)
