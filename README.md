@@ -100,7 +100,7 @@ DistSpatial=gcd.hf(Coor)
 dbmem = dbmem(DistSpatial)
 ```
 
-Look at general output. With this treashold, we get 19 dbmems.
+Look at general output. With this treashold, we get 19 MEMs.
 ```{r}
 summary(dbmem)
 ```
@@ -110,14 +110,14 @@ Specify where to find the function to be sure of the function version to use in 
 adegraphics::s.label(Coor, nb = attr(dbmem, "listw"))
 ```
 
-Visualising the 19 dbmem by using the Coorxy object. 
+Visualising the 19 MEMs by using the Coorxy object. 
 The 1rst dbmems are large spatial scales, the last dbmems are small spatial scales. 
-dbmem can be used in stats like any other env variables
+dbmem can be used in stats like any other env variables.
 ```{r}
 ade4::s.value(Coorxy, dbmem[,1])
 ```
 
-To learn more about dbmem, see the elegant vignette of [Stéphane Dray](https://cran.r-project.org/web/packages/adespatial/vignettes/tutorial.html)
+To learn more about MEMs, see the elegant vignette of [Stéphane Dray](https://cran.r-project.org/web/packages/adespatial/vignettes/tutorial.html)
 
 ## 3. Perform a Principal Coordinates Analysis (PCoA) on the Euclidean distances
 
@@ -157,7 +157,7 @@ Look at correlation among explanatory variables
 cor(Y)
 ```
 
-Nothing problematic. Not surprising cause MEM are orthogonal to each other.
+Nothing problematic. Not surprising cause MEMs are orthogonal to each other.
 Do a db-RDA global model with all explanatory variables.
 ```{r}
 rda1=rda(X, Y)
