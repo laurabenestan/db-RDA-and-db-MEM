@@ -73,8 +73,9 @@ Env <-select(Env_order,-V1)
 ## 2. Create Moran Eigenvector's Maps (MEMs) to be the spatial variables
 
 Look at sites in space by keeping only latitude and longitude and saving this in the object called Coor.
+Keep latitude and longitude in this order as for the function gcd.hf, latitude needs to be first. 
 ```{r}
-Coor=Env[,5:6]
+Coor=Env[,6:5]
 ```
 
 Look the spatial distribution 
@@ -132,15 +133,15 @@ We will keep them all to analyse all genetic variation
 X=Pcoa$vectors
 ```
 
-Look at genotypes distribution in relation to the first 2 Pcoa axes
+Look at genotypes distribution in relation to the first 2 Pcoa axes.
 ```{r}
 plot(X[,1], X[,2])
 ```
 
 ## 4. Selection of explanatory variables
-Create a matrix with all expanatory variables, 16 MEMs, depth, and n-1 years coded in dummy variables (2001, 2002, 2008, 2013, 2014,2015)  
+Create a matrix with all expanatory variables, 19 MEMs, depth, and n-1 years coded in dummy variables (2001, 2002, 2008, 2013, 2014). The dataframe Y should contains 25 explanatory variables (19 MEMs, 5 sampling years and the fishing depth).
 ```{r}
-Y=cbind(dbmem, Env[,7:13])
+Y=cbind(dbmem, Env[,7:12])
 ```
 
 Look at correlation among explanatory variables
@@ -149,7 +150,7 @@ cor(Y)
 ```
 
 Nothing problematic. Not surprising cause MEM are orthogonal to each other.
-Do a db-RDA global model with all explanatory variables
+Do a db-RDA global model with all explanatory variables.
 ```{r}
 rda1=rda(X, Y)
 ```
@@ -188,7 +189,7 @@ OrdiR2step will move towards the global model with all explanatory variables
 rdaG<- rda(X ~ ., Y)
 ```
 
-**Selection of variables** until the 37% (rda global model) is reached
+**Selection of variables** until the 40% (rda global model) is reached
 ```{r}
 Sel <- ordiR2step(rda0, scope = formula(rdaG), direction="both") 
 ```
@@ -198,26 +199,30 @@ We have a selection of variables.
 Sel$anova
 ```
 
-Spatial scale of the MEM2 the 1rst variables that we get.
+Spatial scale of the MEM3 the 1rst variables that we get.
 ```{r}
-s.value(Coor, dbmem[,2])
+ade4::s.value(Coorxy, dbmem[,3])
 ```
 
-Spatial scale of the MEM3
+Spatial scale of the MEM1
 ```{r}
-s.value(Coor, dbmem[,3])
+ade4::s.value(Coorxy, dbmem[,1])
 ```
 
 All MEMS
 ```{r}
-s.value(Coor, dbmem[,1:16])
+s.value(Coor, dbmem[,1:19])
 ```
 
 ## 5. Build a model with the selected variables and visualize the results
 
 Now build a model with only selected variables
 ```{r}
-Ysel=cbind(Y$MEM3,Y$MEM2,Y$Y2014, Y$Y2013,Y$MEM4,Y$MEM10,Y$MEM6,Y$MEM9,Y$Depth_m,Y$MEM15,Y$MEM1,Y$MEM11,Y$MEM8,Y$Y2002,Y$MEM5,Y$Y2001,Y$MEM12,Y$MEM14,Y$MEM7,Y$MEM13)
+Ysel=cbind(Y$MEM3, Y$MEM1, Y$MEM12, Y$MEM2,Y$Y2014, Y$MEM7, Y$MEM10,Y$Y2008,Y$MEM8, Y$MEM15, Y$Y2013, Y$MEM4, Y$MEM9, Y$MEM14,Y$MEM5,Y$Depth_m, Y$MEM11,Y$Y2002, Y$MEM6,Y$Y2001,Y$MEM13)
+```
+
+Verify you have 21 variables selected.
+```{r}
 rdaS<- rda(X ,Ysel)
 summary(rdaS, scaling=1)    
 ```
