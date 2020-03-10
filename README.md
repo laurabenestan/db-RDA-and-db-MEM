@@ -60,6 +60,12 @@ Order$SPECIES <- substr(Order$V1,1,3)
 Order$SPECIES_NUMBER <- ifelse(Order$SPECIES=="fas",1,2)
 ```
 
+Check if you have the right number of indivdiuals for each species.
+```{r}
+nrow(Order[Order$SPECIES=="fas",])
+nrow(Order[Order$SPECIES=="men",])
+```
+
 Merge Order and Env to be in the right Order.
 ```{r}
 Env_order <- merge(Order, Env, by.x="IND", by.y="label_bioinfo",sort=F)
@@ -73,9 +79,10 @@ Env <-select(Env_order,-V1)
 ## 2. Create Moran Eigenvector's Maps (MEMs) to be the spatial variables
 
 Look at sites in space by keeping only latitude and longitude and saving this in the object called Coor.
-Keep latitude and longitude in this order as for the function gcd.hf, latitude needs to be first. 
+Keep latitude and longitude in this order as for the function `gcd.hf`, latitude needs to be first. 
 ```{r}
 Coor=Env[,6:5]
+Coorxy=Env[,5:6]
 ```
 
 Look the spatial distribution 
@@ -85,7 +92,7 @@ plot(Coor, asp=1)
 
 Compute spatial distances among sites accounting for the earth curvature.
 ```{r}
-DistSpatial=gcd.hf(Env[,5:6]) 
+DistSpatial=gcd.hf(Coor) 
 ```
 
 **Compute MEM** by keeping default setting for truncation (length of the longest edge of the minimum spanning tree will be used as the threshold) and just positive MEM.
@@ -93,23 +100,24 @@ DistSpatial=gcd.hf(Env[,5:6])
 dbmem = dbmem(DistSpatial)
 ```
 
-Look at general output.
+Look at general output. With this treashold, we get 19 dbmems.
 ```{r}
 summary(dbmem)
 ```
 
-Visualise the links longer than the threshold.
+Specify where to find the function to be sure of the function version to use in the package `adegraphics`.
 ```{r}
-s.label(Coor, nb = attr(dbmem, "listw"))
+adegraphics::s.label(Coor, nb = attr(dbmem, "listw"))
 ```
 
-Visualise the MEM: the 1rst MEMs are large spatial scales, the last MEMs are small spatial scales.
-MEM can be used in stats like any other env variables.
+Visualising the 19 dbmem by using the Coorxy object. 
+The 1rst dbmems are large spatial scales, the last dbmems are small spatial scales. 
+dbmem can be used in stats like any other env variables
 ```{r}
-s.value(Coor, dbmem[,1:16])
+ade4::s.value(Coorxy, dbmem[,1])
 ```
 
-To learn more about MEM, see the elegant vignette of [Stéphane Dray](https://cran.r-project.org/web/packages/adespatial/vignettes/tutorial.html)
+To learn more about dbmem, see the elegant vignette of [Stéphane Dray](https://cran.r-project.org/web/packages/adespatial/vignettes/tutorial.html)
 
 ## 3. Perform a Principal Coordinates Analysis (PCoA) on the Euclidean distances
 
@@ -124,7 +132,7 @@ Pcoa
 "There were no negative eigenvalues. No correction was applied"   
 If negative or null eigenvalues are produced, they need to be excluded.
 
-The first four axes explains 99.4% of the enture genomic variation. 
+The first four axes explains 99% of the enture genomic variation. 
 We will keep them all to analyse all genetic variation
 
 
@@ -177,7 +185,7 @@ The P-value obtained was P-value = 0.001.
 
 Then, use the function `OrdiR2Step`for selecting the relevant variables to use in the db-RDA. 
 This function allows to add and remove variables in order to maximise the explained variance. 
-To avoid overfitting, selected variables should not explained more than the global model (37%). 
+To avoid overfitting, selected variables should not explained more than the global model (40%). 
 
 `OrdiR2step` will start working from an empty model without explanatory variables, just the intercept.
 ```{r}
