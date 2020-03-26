@@ -283,7 +283,7 @@ Add variables names
 text(scores(rdaS, display="bp", choices=1, scaling=1)*75, scores(rdaS, display="bp", choices=2, scaling=1)*75, labels=c("MEM3","MEM2","2014","2013","MEM4","MEM10","MEM6","MEM9","Depth","MEM15","MEM1","MEM11","MEM8","2002","MEM5","2001","MEM12","MEM7","MEM13"), col="black", cex=0.8, pos=3)
 ```
 
-### Save and interpret the image of RDA
+### 6. Save and interpret the image of RDA
 
 
 First save the db-RDA results in an Rdata object that can be usefull for publication. 
