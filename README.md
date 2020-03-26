@@ -4,8 +4,6 @@
 
 _______________________________________________________________________________
 
-
-
 #### Caroline Senay, Laura Benestan, Geneviève Parent
 
 Rimouski, 2017-2020
@@ -292,6 +290,8 @@ save.image("RDA_all_860ind.Rdata")
 ```
 ![RDA_860ind](RDA_all_860.png)
 
-About this figure, we can say that the first db-RDA axis accounted for 92.3% of the explained variation, while the second accounted for 2.5%. 
-XWe also observe that on the left side of the biplot, S. fasciatus, in red, was mostly explained by the years 2002 and 2001, when most samples of that species were collected. On the right side of the figure, S. mentella, in blue, was mainly driven by 2008 and by greater fishing depths. 
+About this figure, we observe that on the left side of the biplot, ***S. fasciatus***, in red, was mostly explained by the years 2002 and 2001, when most samples of that species were collected. 
+
+On the right side of the figure, ***S. mentella***, in blue, was mainly driven by 2008 and by greater fishing depths. 
+
 MEM3 and MEM1 were the spatial variables best explaining species distribution.
