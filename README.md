@@ -291,11 +291,12 @@ save.image("RDA_all_860ind.Rdata")
 
 Then, interpret carefully the results depicted by the biplot. 
 
-First, you can have a look **on the direction of the arrow**, does it follow the axis 1 or the second axis ? In the example presented here, we can say that year 2002, 2001 and depth are contributing to RDA1 while 2013 is contributing to RDA2.
+First, you can have a look **on the direction of the arrow**, does it follow the axis 1 or the second axis ? In the example presented below, we can observe that year 2002, 2001 and depth are contributing to RDA1 while 2013 is contributing to RDA2.
 
-Then, **arrows point in the direction of increasing values for the variable** indicated. So, here, it seems that sites with increasing depth have increasing genomic differentation.
+Then, **arrows point in the direction of increasing values for the variable** indicated. So, here, the biplot indicate that sites with increasing depth have increasing genomic differentation.
 
-Finally, pay attention to **the arrow length**, longer it is higher that variable explain the variation depicted by the biplot. Here, MEM3 and MEM1 were the spatial variables best explaining species distribution.
+Finally, we need to consider **the arrow length**. Longer the arrow is, higher that variable explain the variation depicted by the biplot. 
+Here, MEM3 and MEM1 were the spatial variables best explaining the overall genomic variation.
 
 ![RDA_860ind](RDA_all_860.png)
 
