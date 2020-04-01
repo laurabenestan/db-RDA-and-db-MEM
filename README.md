@@ -277,26 +277,25 @@ Again you can rescale the biplot in order to minimise overlapping of arrows and 
 arrows(0,0, scores(rdaS, display="bp", choices=1, scaling=1)*70, scores(rdaS, display="bp", choices=2, scaling=1)*70, col="black", length=0.1)
 ```
 
-Add variables names
+Add variables names indicating the corresponding arrow for each variable.
 ```{r}
 text(scores(rdaS, display="bp", choices=1, scaling=1)*75, scores(rdaS, display="bp", choices=2, scaling=1)*75, labels=c("MEM3","MEM2","2014","2013","MEM4","MEM10","MEM6","MEM9","Depth","MEM15","MEM1","MEM11","MEM8","2002","MEM5","2001","MEM12","MEM7","MEM13"), col="black", cex=0.8, pos=3)
 ```
 
-### 6. Save and interpret the image of RDA
-
-
-First save the db-RDA results in an Rdata object that can be usefull for publication. 
+Do not forget to save the db-RDA results in an .Rdata object. 
 ```{r}
 save.image("RDA_all_860ind.Rdata")
 ```
+
+### 6. Save and interpret the image of RDA
+
+Then, interpret carefully the results depicted by the biplot. 
+
+First, you can have a look **on the direction of the arrow**, does it follow the axis 1 or the second axis ? In the example presented here, we can say that year 2002, 2001 and depth are contributing to RDA1 while 2013 is contributing to RDA2.
+
+Then, **arrows point in the direction of increasing values for the variable** indicated. So, here, it seems that sites with increasing depth have increasing genomic differentation.
+
+Finally, pay attention to **the arrow length**, longer it is higher that variable explain the variation depicted by the biplot. Here, MEM3 and MEM1 were the spatial variables best explaining species distribution.
+
 ![RDA_860ind](RDA_all_860.png)
 
-About this figure, we observe that on the left side of the biplot, ***S. fasciatus***, in red, was mostly explained by the years 2002 and 2001, when most samples of that species were collected. 
-
-On the right side of the figure, ***S. mentella***, in blue, was mainly driven by 2008 and by greater fishing depths. 
-
-MEM3 and MEM1 were the spatial variables best explaining species distribution.
-
-So these results are showing us that year 2002, 2001 and depth are contributing to RDA1 while 2013 is contributing to RDA2. 
-It seems that sites with increasing depth have increasing genomic differentation (from scaling 1). 
-The vectors indicate factors that are driving different axes.
