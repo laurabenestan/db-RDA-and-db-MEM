@@ -173,14 +173,14 @@ vif(rda1)
 Here, we don't need to exclude variables because VIF was < 10.
 
 Then we look at the explained variance by the global db-RDA model.
-Adjusted R2 accounts for the number of variables.
+Adjusted R2 accounts for the number of variables and then is a measure of the unbiased amount of explained variation. 
 ```{r}
 RsquareAdj(rda1)
 ```
 
-RsquareAdj(rda1) was equal 0.37 so that means this model explains 37% of the entire genomic variation.
+RsquareAdj(rda1) was equal 0.40 so that means this model explains 40% of the entire genomic variation.
 
-Test for the significancy/probability of the model by using a ANOVA (Analysis of variance) test on the db-RDA global model.
+Test for the significancy/probability of the model by using a ANOVA (Analysis of variance) test on the db-RDA global model. Permutation tests are preferently used here as it does not required data normality distribution. Permutation tests or ramdomization test compute the distribution when the null hypothesis is true using a large number of times (nperm) and recomputing the statistic each time. The test compare the true value of the statistic to the reference null distribution.
 ```{r}
 anova(rda1, perm=999)
 ```
@@ -256,7 +256,8 @@ Assess how much percent of variation is explained by each axis in order to add t
 summary(eigenvals(species.rda, model = "constrained"))
 ```
 
-Create the frame of the RDA.
+Create the frame of the RDA. We selected a scaling equal to 2, that means a correlation biplot (response variable focused): distances between objects are not approximate Euclidean distances. Angles between all vectors reflect linear correlation.
+
 ```{r}
 plot(rdaS, scaling=2, main="", type="none", xlab=c("db-RDA-1"), ylab=c("db-RDA-2"), xlim=c(-20, 20), ylim=c(-5, 5))
 col2 <- c("blue","red")
@@ -295,3 +296,7 @@ About this figure, we observe that on the left side of the biplot, ***S. fasciat
 On the right side of the figure, ***S. mentella***, in blue, was mainly driven by 2008 and by greater fishing depths. 
 
 MEM3 and MEM1 were the spatial variables best explaining species distribution.
+
+So these results are showing us that year 2002, 2001 and depth are contributing to RDA1 while 2013 is contributing to RDA2. 
+It seems that sites with increasing depth have increasing genomic differentation (from scaling 1). 
+The vectors indicate factors that are driving different axes.
