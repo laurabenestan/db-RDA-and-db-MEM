@@ -130,7 +130,11 @@ Pcoa
 You should end up having a message such as "There were no negative eigenvalues. No correction was applied"   .
 If negative or null eigenvalues are produced, they need to be excluded.
 
-Here, the first four PCoA axes explains 99% of the overall genomic variation. 
+```{r}
+Pcoa$values$Cumul_eig
+```
+
+Here, the first four PCoA axes explains 49% of the overall genomic variation. 
 We will keep them all to analyse genomic variation.
 
 **Extract Pcoa principal components**, which will be the response variable in the db-RDA.
